@@ -24,6 +24,59 @@ Discarded input sections
  .ARM.exidx     0x0000000000000000        0x8 /app/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.linux64_1.4.0.202007081208/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv5/hard/crt0.o
  .ARM.attributes
                 0x0000000000000000       0x1e /app/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.linux64_1.4.0.202007081208/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv5/hard/crt0.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .group         0x0000000000000000        0xc Drivers/Src/stm32f767xx_gpio_driver.o
+ .text          0x0000000000000000        0x0 Drivers/Src/stm32f767xx_gpio_driver.o
+ .data          0x0000000000000000        0x0 Drivers/Src/stm32f767xx_gpio_driver.o
+ .bss           0x0000000000000000        0x0 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_PeriClockControl
+                0x0000000000000000      0x228 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_Init
+                0x0000000000000000       0x14 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_DeInit
+                0x0000000000000000       0x14 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_ReadFromInputPin
+                0x0000000000000000       0x1a Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_ReadFromInputPort
+                0x0000000000000000       0x16 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_WriteToOutputPin
+                0x0000000000000000       0x1c Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_WriteToOutputPort
+                0x0000000000000000       0x18 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_TogglePin
+                0x0000000000000000       0x18 Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_IRQConfig
+                0x0000000000000000       0x1e Drivers/Src/stm32f767xx_gpio_driver.o
+ .text.GPIO_IRQHandle
+                0x0000000000000000       0x16 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_info    0x0000000000000000      0x561 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_abbrev  0x0000000000000000      0x10d Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_aranges
+                0x0000000000000000       0x68 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_ranges  0x0000000000000000       0x58 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0x7b Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000      0xa72 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0x22 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0x8e Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0x51 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0xef Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0x6a Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000      0x1df Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000      0x334 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_macro   0x0000000000000000       0xc4 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_line    0x0000000000000000      0x500 Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_str     0x0000000000000000     0x5558 Drivers/Src/stm32f767xx_gpio_driver.o
+ .comment       0x0000000000000000       0x7c Drivers/Src/stm32f767xx_gpio_driver.o
+ .debug_frame   0x0000000000000000      0x1a0 Drivers/Src/stm32f767xx_gpio_driver.o
+ .ARM.attributes
+                0x0000000000000000       0x37 Drivers/Src/stm32f767xx_gpio_driver.o
  .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
  .group         0x0000000000000000        0xc Src/main.o
@@ -35,6 +88,14 @@ Discarded input sections
  .text          0x0000000000000000        0x0 Src/main.o
  .data          0x0000000000000000        0x0 Src/main.o
  .bss           0x0000000000000000        0x0 Src/main.o
+ .debug_macro   0x0000000000000000      0xa72 Src/main.o
+ .debug_macro   0x0000000000000000       0x22 Src/main.o
+ .debug_macro   0x0000000000000000       0x8e Src/main.o
+ .debug_macro   0x0000000000000000       0x51 Src/main.o
+ .debug_macro   0x0000000000000000       0xef Src/main.o
+ .debug_macro   0x0000000000000000       0x6a Src/main.o
+ .debug_macro   0x0000000000000000      0x1df Src/main.o
+ .debug_macro   0x0000000000000000      0x334 Src/main.o
  .group         0x0000000000000000        0xc Src/syscalls.o
  .group         0x0000000000000000        0xc Src/syscalls.o
  .group         0x0000000000000000        0xc Src/syscalls.o
@@ -275,6 +336,7 @@ Linker script and memory map
 LOAD /app/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.linux64_1.4.0.202007081208/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv5/hard/crti.o
 LOAD /app/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.linux64_1.4.0.202007081208/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/thumb/v7e-m/fpv5/hard/crtbegin.o
 LOAD /app/stm32cubeide/plugins/com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.7-2018-q2-update.linux64_1.4.0.202007081208/tools/bin/../lib/gcc/arm-none-eabi/7.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m/fpv5/hard/crt0.o
+LOAD Drivers/Src/stm32f767xx_gpio_driver.o
 LOAD Src/main.o
 LOAD Src/syscalls.o
 LOAD Src/sysmem.o
@@ -594,25 +656,17 @@ OUTPUT(stm32f7xx_drivers.elf elf32-littlearm)
  .debug_ranges  0x0000000000000000       0x10 Src/main.o
  .debug_ranges  0x0000000000000010       0x20 Startup/startup_stm32f767zitx.o
 
-.debug_macro    0x0000000000000000     0x1221
+.debug_macro    0x0000000000000000       0x6c
  .debug_macro   0x0000000000000000       0x6c Src/main.o
- .debug_macro   0x000000000000006c      0xa72 Src/main.o
- .debug_macro   0x0000000000000ade       0x22 Src/main.o
- .debug_macro   0x0000000000000b00       0x8e Src/main.o
- .debug_macro   0x0000000000000b8e       0x51 Src/main.o
- .debug_macro   0x0000000000000bdf       0xef Src/main.o
- .debug_macro   0x0000000000000cce       0x6a Src/main.o
- .debug_macro   0x0000000000000d38      0x1df Src/main.o
- .debug_macro   0x0000000000000f17      0x30a Src/main.o
 
 .debug_line     0x0000000000000000      0x421
  .debug_line    0x0000000000000000      0x39d Src/main.o
  .debug_line    0x000000000000039d       0x84 Startup/startup_stm32f767zitx.o
 
-.debug_str      0x0000000000000000     0x4e80
- .debug_str     0x0000000000000000     0x4e4f Src/main.o
-                                       0x4faa (size before relaxing)
- .debug_str     0x0000000000004e4f       0x31 Startup/startup_stm32f767zitx.o
+.debug_str      0x0000000000000000     0x4ed1
+ .debug_str     0x0000000000000000     0x4ea0 Src/main.o
+                                       0x4ffb (size before relaxing)
+ .debug_str     0x0000000000004ea0       0x31 Startup/startup_stm32f767zitx.o
                                          0x7e (size before relaxing)
 
 .comment        0x0000000000000000       0x7b
