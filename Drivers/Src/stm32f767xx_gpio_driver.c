@@ -149,12 +149,11 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_DeInit
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function resets all the GPIOx registers
  *
  * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
  *
  * @return					- None
  *
@@ -163,61 +162,91 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
  */
 void GPIO_DeInit(GPIO_RegDef_t *pGPIOx){
 
-
+	if(pGPIOx == GPIOA){
+		GPIOA_REG_RESET();
+	}else if(pGPIOx == GPIOB){
+		GPIOB_REG_RESET();
+	}else if(pGPIOx == GPIOC){
+		GPIOC_REG_RESET();
+	}else if(pGPIOx == GPIOD){
+		GPIOD_REG_RESET();
+	}else if(pGPIOx == GPIOE){
+		GPIOE_REG_RESET();
+	}else if(pGPIOx == GPIOF){
+		GPIOF_REG_RESET();
+	}else if(pGPIOx == GPIOG){
+		GPIOG_REG_RESET();
+	}else if(pGPIOx == GPIOH){
+		GPIOH_REG_RESET();
+	}else if(pGPIOx == GPIOI){
+		GPIOI_REG_RESET();
+	}else if(pGPIOx == GPIOJ){
+		GPIOJ_REG_RESET();
+	}else if(pGPIOx == GPIOK){
+		GPIOK_REG_RESET();
+	}
 
 }
 
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_ReadFromInputPin
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function reads the value form IDR (Input Data Register) of the GPIOx Pin and returns the value
  *
- * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- GPIO Port Base Address
+ * @params[in]				- GPIOx Pin Number
  *
- * @return					- None
+ * @return					- value of the input data (0 or 1)
  *
  * @note					- None
  *
  */
 uint8_t GPIO_ReadFromInputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
 
+	uint8_t value;
 
+	value = (uint8_t)(pGPIOx->IDR >> ((PinNumber) & 0x00000001));
+
+	return value;
 
 }
 
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_ReadFromInputPort
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function reads the value form IDR (Input Data Register) of the GPIOx Port and returns the value
  *
- * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- GPIO Port Base Address
  *
- * @return					- None
+ * @return					- values from all the Pins in GPIOx port
  *
  * @note					- None
  *
  */
 uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx){
 
+	uint16_t value;
 
+	value = (uint8_t)(pGPIOx->IDR);
+
+	return value;
 
 }
 
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_WriteToOutputPin
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function sets and resets the output of the corresponding pin of GPIOx Port
  *
  * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- Pin NUmber
+ * @params[in]				- SET or RESET Macros
  *
  * @return					- None
  *
@@ -226,19 +255,26 @@ uint16_t GPIO_ReadFromInputPort(GPIO_RegDef_t *pGPIOx){
  */
 void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t value){
 
+	if(value == GPIO_PIN_SET){
+		// write 1 to the Output Data Register (ODT) at the bit field corresponding to the pin number
+		pGPIOx->ODR |= (1 << PinNumber);
 
+	}else{
+		// write 0
+		pGPIOx->ODR &= ~(1 << PinNumber);
+	}
 
 }
 
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_WriteToOutputPort
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function write the value to the GPIOx port
  *
  * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- value to be written
  *
  * @return					- None
  *
@@ -247,19 +283,19 @@ void GPIO_WriteToOutputPin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber, uint8_t val
  */
 void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value){
 
-
+	pGPIOx->ODR = value;
 
 }
 
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_TogglePin
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function toggles the GPIOx Pin
  *
  * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- PinNumber
  *
  * @return					- None
  *
@@ -268,7 +304,7 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value){
  */
 void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
 
-
+	pGPIOx->ODR ^= (1 << PinNumber);
 
 }
 
