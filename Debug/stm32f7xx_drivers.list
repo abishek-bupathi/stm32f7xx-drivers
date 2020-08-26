@@ -37,13 +37,13 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
  16 .debug_macro  00001402  00000000  00000000  00011340  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_line   00000a1b  00000000  00000000  00012742  2**0
+ 17 .debug_line   00000a1f  00000000  00000000  00012742  2**0
                   CONTENTS, READONLY, DEBUGGING
- 18 .debug_str    0000582d  00000000  00000000  0001315d  2**0
+ 18 .debug_str    00005830  00000000  00000000  00013161  2**0
                   CONTENTS, READONLY, DEBUGGING
- 19 .comment      0000007b  00000000  00000000  0001898a  2**0
+ 19 .comment      0000007b  00000000  00000000  00018991  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00000224  00000000  00000000  00018a08  2**2
+ 20 .debug_frame  00000224  00000000  00000000  00018a0c  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -753,11 +753,11 @@ int main(void){
 	GPIO_Handle_t GpioLed, GpioBtn;
 
 	// Initialising Led
-	GpioLed.pGPIOx = GPIOB;
+	GpioLed.pGPIOx = GPIOA;
  800066e:	4b1d      	ldr	r3, [pc, #116]	; (80006e4 <main+0x7c>)
  8000670:	60fb      	str	r3, [r7, #12]
-	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_7;
- 8000672:	2307      	movs	r3, #7
+	GpioLed.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_5;
+ 8000672:	2305      	movs	r3, #5
  8000674:	743b      	strb	r3, [r7, #16]
     GpioLed.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_OUT;
  8000676:	2301      	movs	r3, #1
@@ -771,7 +771,7 @@ int main(void){
 	GpioLed.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
  8000682:	2300      	movs	r3, #0
  8000684:	74fb      	strb	r3, [r7, #19]
-	GPIO_PeriClockControl(GPIOB, ENABLE);
+	GPIO_PeriClockControl(GPIOA, ENABLE);
  8000686:	2101      	movs	r1, #1
  8000688:	4816      	ldr	r0, [pc, #88]	; (80006e4 <main+0x7c>)
  800068a:	f7ff fdd5 	bl	8000238 <GPIO_PeriClockControl>
@@ -781,11 +781,11 @@ int main(void){
  8000694:	f7ff fee4 	bl	8000460 <GPIO_Init>
 
 	// Initialising Button
-	GpioBtn.pGPIOx = GPIOC;
+	GpioBtn.pGPIOx = GPIOB;
  8000698:	4b13      	ldr	r3, [pc, #76]	; (80006e8 <main+0x80>)
  800069a:	603b      	str	r3, [r7, #0]
-	GpioBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_13;
- 800069c:	230d      	movs	r3, #13
+	GpioBtn.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_12;
+ 800069c:	230c      	movs	r3, #12
  800069e:	713b      	strb	r3, [r7, #4]
 	GpioBtn.GPIO_PinConfig.GPIO_PinMode = GPIO_MODE_IN;
  80006a0:	2300      	movs	r3, #0
@@ -796,7 +796,7 @@ int main(void){
 	GpioBtn.GPIO_PinConfig.GPIO_PinPuPdControl = GPIO_NO_PUPD;
  80006a8:	2300      	movs	r3, #0
  80006aa:	71fb      	strb	r3, [r7, #7]
-	GPIO_PeriClockControl(GPIOC, ENABLE);
+	GPIO_PeriClockControl(GPIOB, ENABLE);
  80006ac:	2101      	movs	r1, #1
  80006ae:	480e      	ldr	r0, [pc, #56]	; (80006e8 <main+0x80>)
  80006b0:	f7ff fdc2 	bl	8000238 <GPIO_PeriClockControl>
@@ -808,30 +808,30 @@ int main(void){
 
 	while(1){
 
-		if(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13) == BUTTON_PRESSED){
- 80006bc:	210d      	movs	r1, #13
+		if(GPIO_ReadFromInputPin(GPIOB, GPIO_PIN_NO_12) == BUTTON_PRESSED){
+ 80006bc:	210c      	movs	r1, #12
  80006be:	480a      	ldr	r0, [pc, #40]	; (80006e8 <main+0x80>)
  80006c0:	f7ff ff96 	bl	80005f0 <GPIO_ReadFromInputPin>
  80006c4:	4603      	mov	r3, r0
- 80006c6:	2b01      	cmp	r3, #1
+ 80006c6:	2b00      	cmp	r3, #0
  80006c8:	d105      	bne.n	80006d6 <main+0x6e>
-			GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_7, HIGH);
+			GPIO_WriteToOutputPin(GPIOA, GPIO_PIN_NO_5, HIGH);
  80006ca:	2201      	movs	r2, #1
- 80006cc:	2107      	movs	r1, #7
+ 80006cc:	2105      	movs	r1, #5
  80006ce:	4805      	ldr	r0, [pc, #20]	; (80006e4 <main+0x7c>)
  80006d0:	f7ff ffa4 	bl	800061c <GPIO_WriteToOutputPin>
  80006d4:	e7f2      	b.n	80006bc <main+0x54>
 		}else{
-			GPIO_WriteToOutputPin(GPIOB, GPIO_PIN_NO_7, LOW);
+			GPIO_WriteToOutputPin(GPIOA, GPIO_PIN_NO_5, LOW);
  80006d6:	2200      	movs	r2, #0
- 80006d8:	2107      	movs	r1, #7
+ 80006d8:	2105      	movs	r1, #5
  80006da:	4802      	ldr	r0, [pc, #8]	; (80006e4 <main+0x7c>)
  80006dc:	f7ff ff9e 	bl	800061c <GPIO_WriteToOutputPin>
-		if(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13) == BUTTON_PRESSED){
+		if(GPIO_ReadFromInputPin(GPIOB, GPIO_PIN_NO_12) == BUTTON_PRESSED){
  80006e0:	e7ec      	b.n	80006bc <main+0x54>
  80006e2:	bf00      	nop
- 80006e4:	40020400 	.word	0x40020400
- 80006e8:	40020800 	.word	0x40020800
+ 80006e4:	40020000 	.word	0x40020000
+ 80006e8:	40020400 	.word	0x40020400
 
 080006ec <Reset_Handler>:
 
