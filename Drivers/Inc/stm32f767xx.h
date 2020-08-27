@@ -157,6 +157,32 @@ typedef struct{
 
 }RCC_RegDef_t;
 
+
+// Peripheral register definition structure for EXTI
+typedef struct{
+
+	__vo uint32_t IMR;
+	__vo uint32_t EMR;
+	__vo uint32_t RTSR;
+	__vo uint32_t FTSR;
+	__vo uint32_t SWIER;
+	__vo uint32_t PR;
+
+}EXTI_RegDef_t;
+
+
+// Peripheral register definition structure for SYSCFG
+typedef struct{
+
+	__vo uint32_t MEMRMP;
+	__vo uint32_t PMC;
+	__vo uint32_t EXTICR[4];
+	__vo uint32_t CBR;
+	__vo uint32_t CMPCR;
+
+
+}SYSCFG_RegDef_t;
+
 // Peripheral definitions (Peripheral base addresses typecasted to xxx_RegDef_t)
 
 #define GPIOA		((GPIO_RegDef_t*)GPIOA_BASEADDR)
@@ -172,6 +198,8 @@ typedef struct{
 #define GPIOK		((GPIO_RegDef_t*)GPIOK_BASEADDR)
 
 #define RCC			((RCC_RegDef_t*)RCC_BASEADDR)
+
+#define EXTI			((EXTI_RegDef_t*)EXTI_BASEADDR)
 
 
 /****************************Peripheral clock enabling macros***************************/
