@@ -107,7 +107,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 
 	}else{
 		// Interrupt Mode
-		if(pGPIOHandlet->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT){
+		if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_FT){
 
 			// 1. Configure FTSR
 			EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
@@ -115,7 +115,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 			// Clear corresponding RTSR bit
 			EXTI->RTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 
-		}else if(GPIO_Handle_t->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT){
+		}else if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RT){
 
 			// 1. Configure RTSR
 			EXTI->RTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
@@ -123,7 +123,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 			EXTI->FTSR &= ~(1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
 
 
-		}else if(GPIO_Handle_t->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT){
+		}else if(pGPIOHandle->GPIO_PinConfig.GPIO_PinMode == GPIO_MODE_IT_RFT){
 
 			// 1. Configure FTSR and RTSR
 			EXTI->FTSR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
@@ -134,6 +134,13 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 		}
 
 		// 2. Configure GPIO port selection in SYSCFG_EXTIR
+		uint8_t temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 4;
+		uint8_t temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 4;
+		uint8_t portcode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx)
+
+		SYSCFG_PCLK_EN();
+
+		SYSCFG->EXTICR[temp1] |= portcode << (temp2*4);
 
 		// 3. Enable EXTI interrupt delivery using IMR
 		EXTI->IMR |= (1 << pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber);
@@ -356,7 +363,44 @@ void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
  */
 void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi){
 
+	if(IRQEnorDi == ENABLE){
 
+		if(IRQNumber < 31){
+			// Program ISER0 Regsiter
+
+			*NVIC_ISER0 |= (1 << IRQNumber);
+
+		}else if(IRQNumber > 31 && IRQNumber < 64){
+			// Program ISER1 Regsiter
+
+			*NVIC_ISER1 |= (1 << (IRQNumber % 32));
+
+		}else if(IRQNumber > 64 && IRQNumber < 96){
+			// Program ISER2 Regsiter
+
+			*NVIC_ISER1 |= (1 << (IRQNumber % 64));
+
+		}
+	} else{
+
+		if(IRQNumber < 31){
+			// Program ICER0 Regsiter
+
+			*NVIC_ICER0 |= (1 << IRQNumber);
+
+		}else if(IRQNumber > 31 && IRQNumber < 64){
+			// Program ICER1 Regsiter
+
+			*NVIC_ICER1 |= (1 << (IRQNumber % 32));
+
+		}else if(IRQNumber > 64 && IRQNumber < 96){
+			// Program ICER2 Regsiter
+
+			*NVIC_ICER1 |= (1 << (IRQNumber % 64));
+
+		}
+
+	}
 
 }
 

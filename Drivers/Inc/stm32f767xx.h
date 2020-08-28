@@ -12,6 +12,27 @@
 
 #define __vo volatile
 
+
+/**********************************Processor Specific Details**********************************/
+
+/*
+ * ARM Cortex Mx Processor NVIC ISERx Register Addresses
+ */
+#define NVIC_ISER0					((__vo uint32_t*)0xE000E100)
+#define NVIC_ISER1					((__vo uint32_t*)0xE000E104)
+#define NVIC_ISER2					((__vo uint32_t*)0xE000E108)
+#define NVIC_ISER3					((__vo uint32_t*)0xE000E10C)
+
+/*
+ * ARM Cortex Mx Processor NVIC ICERx Register Addresses
+ */
+#define NVIC_ICER0					((__vo uint32_t*)0xE000E180)
+#define NVIC_ICER1					((__vo uint32_t*)0xE000E184)
+#define NVIC_ICER2					((__vo uint32_t*)0xE000E188)
+#define NVIC_ICER3					((__vo uint32_t*)0xE000E18C)
+
+
+
 /***********************************Base address declaration***********************************/
 
 /*
@@ -31,7 +52,7 @@
 
 #define PERIPH_BASEADDR				0X4000 0000U
 #define APB1PERIPH_BASEADDR			PERIPH_BASEADDR
-#define APB2PERIPH_BASEADDR			0x4001 0000U
+#define APB2PERIPH_BASEADDR			0x40010000U
 #define AHB1PERIPH_BASEADDR			0x40020000U
 #define AHB2PERIPH_BASEADDR			0x5000 0000U
 #define AHB3PERIPH_BASEADDR			0x6000 0000U
@@ -180,7 +201,6 @@ typedef struct{
 	__vo uint32_t CBR;
 	__vo uint32_t CMPCR;
 
-
 }SYSCFG_RegDef_t;
 
 // Peripheral definitions (Peripheral base addresses typecasted to xxx_RegDef_t)
@@ -199,8 +219,9 @@ typedef struct{
 
 #define RCC			((RCC_RegDef_t*)RCC_BASEADDR)
 
-#define EXTI			((EXTI_RegDef_t*)EXTI_BASEADDR)
+#define EXTI		((EXTI_RegDef_t*)EXTI_BASEADDR)
 
+#define SYSCFG		((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
 
 /****************************Peripheral clock enabling macros***************************/
 
@@ -330,6 +351,28 @@ typedef struct{
 #define GPIOI_REG_RESET()			do{ (RCC->AHB1RSTR |= (1 << 8)); (RCC->AHB1RSTR &= ~(1 << 8)); } while(0)
 #define GPIOJ_REG_RESET()			do{ (RCC->AHB1RSTR |= (1 << 9)); (RCC->AHB1RSTR &= ~(1 << 9)); } while(0)
 #define GPIOK_REG_RESET()			do{ (RCC->AHB1RSTR |= (1 << 10)); (RCC->AHB1RSTR &= ~(1 << 10)); } while(0)
+
+// Return the port code of the GPIOx base address
+#define GPIO_BASEADDR_TO_CODE(x)    (x == GPIOA) ? 0 :\
+									(x == GPIOB) ? 1 :\
+									(x == GPIOC) ? 2 :\
+									(x == GPIOD) ? 3 :\
+									(x == GPIOE) ? 4 :\
+									(x == GPIOF) ? 5 :\
+									(x == GPIOG) ? 6 :\
+									(x == GPIOH) ? 7 :\
+									(x == GPIOI) ? 8 :\
+									(x == GPIOJ) ? 9 :\
+									(x == GPIOK) ? 10 :\
+
+// IRQ Number Macros
+#define IRQ_NO_EXTI0				6
+#define IRQ_NO_EXTI1				7
+#define IRQ_NO_EXTI2				8
+#define IRQ_NO_EXTI3				9
+#define IRQ_NO_EXTI4				10
+#define IRQ_NO_EXTI5_9				23
+#define IRQ_NO_EXTI15_10			40
 
 
 
