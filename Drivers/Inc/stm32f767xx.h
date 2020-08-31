@@ -31,7 +31,13 @@
 #define NVIC_ICER2					((__vo uint32_t*)0xE000E188)
 #define NVIC_ICER3					((__vo uint32_t*)0xE000E18C)
 
+/*
+ * ARM Cortex Mx Processor Priority Address
+ */
+#define NVIC_PR_BASE_ADDR 			((__vo uint32_t*)0xE000E400)
 
+
+#define NO_PR_BITS_IMPLEMENTED 		4
 
 /***********************************Base address declaration***********************************/
 
@@ -198,12 +204,13 @@ typedef struct{
 	__vo uint32_t MEMRMP;
 	__vo uint32_t PMC;
 	__vo uint32_t EXTICR[4];
+	     uint32_t RESERVED1;
 	__vo uint32_t CBR;
 	__vo uint32_t CMPCR;
 
 }SYSCFG_RegDef_t;
 
-// Peripheral definitions (Peripheral base addresses typecasted to xxx_RegDef_t)
+// Peripheral definitions (Peripheral base addresses type casted to xxx_RegDef_t)
 
 #define GPIOA		((GPIO_RegDef_t*)GPIOA_BASEADDR)
 #define GPIOB		((GPIO_RegDef_t*)GPIOB_BASEADDR)
@@ -353,7 +360,7 @@ typedef struct{
 #define GPIOK_REG_RESET()			do{ (RCC->AHB1RSTR |= (1 << 10)); (RCC->AHB1RSTR &= ~(1 << 10)); } while(0)
 
 // Return the port code of the GPIOx base address
-#define GPIO_BASEADDR_TO_CODE(x)    (x == GPIOA) ? 0 :\
+#define GPIO_BASEADDR_TO_CODE(x)  ( (x == GPIOA) ? 0 :\
 									(x == GPIOB) ? 1 :\
 									(x == GPIOC) ? 2 :\
 									(x == GPIOD) ? 3 :\
@@ -363,7 +370,7 @@ typedef struct{
 									(x == GPIOH) ? 7 :\
 									(x == GPIOI) ? 8 :\
 									(x == GPIOJ) ? 9 :\
-									(x == GPIOK) ? 10 :\
+									(x == GPIOK) ? 10:0 )
 
 // IRQ Number Macros
 #define IRQ_NO_EXTI0				6
@@ -374,7 +381,22 @@ typedef struct{
 #define IRQ_NO_EXTI5_9				23
 #define IRQ_NO_EXTI15_10			40
 
-
+// IRQ Priority Macros
+#define NVIC_PRIORITY_1				1
+#define NVIC_PRIORITY_2				2
+#define NVIC_PRIORITY_3				3
+#define NVIC_PRIORITY_4				4
+#define NVIC_PRIORITY_5				5
+#define NVIC_PRIORITY_6				6
+#define NVIC_PRIORITY_7				7
+#define NVIC_PRIORITY_8				8
+#define NVIC_PRIORITY_9				9
+#define NVIC_PRIORITY_10			10
+#define NVIC_PRIORITY_11			11
+#define NVIC_PRIORITY_12			12
+#define NVIC_PRIORITY_13			13
+#define NVIC_PRIORITY_14			14
+#define NVIC_PRIORITY_15			15
 
 #include <stm32f767xx_gpio_driver.h>
 

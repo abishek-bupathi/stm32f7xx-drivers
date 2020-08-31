@@ -109,7 +109,8 @@ void GPIO_WriteToOutputPort(GPIO_RegDef_t *pGPIOx, uint16_t value);
 void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber);
 
 // IRQ config and handling
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi);
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t IRQEnorDi);
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority);
 void GPIO_IRQHandle(uint8_t PinNumber);
 
 #endif /* INC_STM32F767XX_GPIO_DRIVER_H_ */

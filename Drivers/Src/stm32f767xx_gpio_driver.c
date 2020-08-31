@@ -136,7 +136,7 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 		// 2. Configure GPIO port selection in SYSCFG_EXTIR
 		uint8_t temp1 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber / 4;
 		uint8_t temp2 = pGPIOHandle->GPIO_PinConfig.GPIO_PinNumber % 4;
-		uint8_t portcode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx)
+		uint8_t portcode = GPIO_BASEADDR_TO_CODE(pGPIOHandle->pGPIOx);
 
 		SYSCFG_PCLK_EN();
 
@@ -349,11 +349,12 @@ void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
 
 
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_IRQConfig
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function enables or IRQ
  *
- * @params[in]				- Base address of the GPIO peripheral
+ * @params[in]				- IRQ Number
+ * @params[in]				- IRQ Priority
  * @params[in]				- ENABLE or DISABLE Macros
  *
  * @return					- None
@@ -361,11 +362,11 @@ void GPIO_TogglePin(GPIO_RegDef_t *pGPIOx, uint8_t PinNumber){
  * @note					- None
  *
  */
-void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi){
+void GPIO_IRQInterruptConfig(uint8_t IRQNumber, uint8_t IRQEnorDi){
 
 	if(IRQEnorDi == ENABLE){
 
-		if(IRQNumber < 31){
+		if(IRQNumber <= 31){
 			// Program ISER0 Regsiter
 
 			*NVIC_ISER0 |= (1 << IRQNumber);
@@ -375,15 +376,15 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi){
 
 			*NVIC_ISER1 |= (1 << (IRQNumber % 32));
 
-		}else if(IRQNumber > 64 && IRQNumber < 96){
+		}else if(IRQNumber >= 64 && IRQNumber < 96){
 			// Program ISER2 Regsiter
 
-			*NVIC_ISER1 |= (1 << (IRQNumber % 64));
+			*NVIC_ISER2 |= (1 << (IRQNumber % 64));
 
 		}
 	} else{
 
-		if(IRQNumber < 31){
+		if(IRQNumber <= 31){
 			// Program ICER0 Regsiter
 
 			*NVIC_ICER0 |= (1 << IRQNumber);
@@ -393,10 +394,10 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi){
 
 			*NVIC_ICER1 |= (1 << (IRQNumber % 32));
 
-		}else if(IRQNumber > 64 && IRQNumber < 96){
+		}else if(IRQNumber >= 64 && IRQNumber < 96){
 			// Program ICER2 Regsiter
 
-			*NVIC_ICER1 |= (1 << (IRQNumber % 64));
+			*NVIC_ICER2 |= (1 << (IRQNumber % 64));
 
 		}
 
@@ -406,8 +407,36 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi){
 
 
 
+
 /*****************************************************************
- * @function				- GPIO_PeriClockControl
+ * @function				- GPIO_IRQPriorityConfig
+ *
+ * @description				- The function sets the Priority register bit
+ *
+ * @params[in]				- IRQ Number
+ * @params[in]				- IRQ Priority
+ *
+ * @return					- None
+ *
+ * @note					- None
+ *
+ */
+void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriotity){
+
+	// 1. Finding the IPR Register
+	uint8_t iprx = IRQNumber / 4;
+	uint8_t iprx_section = IRQNumber % 4;
+
+	uint8_t shift_amt = (8 * iprx_section) + (8 - NO_PR_BITS_IMPLEMENTED);
+
+	*(NVIC_PR_BASE_ADDR + (iprx*4)) |= (IRQPriotity << shift_amt);
+
+}
+
+
+
+/*****************************************************************
+ * @function				- GPIO_IRQHandle
  *
  * @description				- The function enables or disables peripheral clock for the
  *
@@ -421,6 +450,12 @@ void GPIO_IRQConfig(uint8_t IRQNumber, uint8_t IRQPriority, uint8_t IRQEnorDi){
  */
 void GPIO_IRQHandle(uint8_t PinNumber){
 
+	// Clear the EXTI PR Register corresponding to the Pin Number
+	if(EXTI->PR & (1 << PinNumber)){
+
+		EXTI->PR |= (1 << PinNumber);
+
+	}
 
 
 }
