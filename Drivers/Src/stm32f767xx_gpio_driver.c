@@ -438,10 +438,9 @@ void GPIO_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriotity){
 /*****************************************************************
  * @function				- GPIO_IRQHandle
  *
- * @description				- The function enables or disables peripheral clock for the
+ * @description				- The function handles the IRQ
  *
- * @params[in]				- Base address of the GPIO peripheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- Pin Number
  *
  * @return					- None
  *

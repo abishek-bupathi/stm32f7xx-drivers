@@ -46,8 +46,8 @@ stm32f7xx_drivers.bin \
 all: stm32f7xx_drivers.elf secondary-outputs
 
 # Tool invocations
-stm32f7xx_drivers.elf: $(OBJS) $(USER_OBJS) D:\CODING\STM32\STM32F7XX_DRIVERS\STM32F767ZITX_FLASH.ld
-	arm-none-eabi-gcc -o "stm32f7xx_drivers.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"D:\CODING\STM32\STM32F7XX_DRIVERS\STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f7xx_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+stm32f7xx_drivers.elf: $(OBJS) $(USER_OBJS) /run/media/abishek_bupathi/Productivity/CODING/STM32/STM32F7XX_DRIVERS/STM32F767ZITX_FLASH.ld
+	arm-none-eabi-gcc -o "stm32f7xx_drivers.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m7 -T"/run/media/abishek_bupathi/Productivity/CODING/STM32/STM32F7XX_DRIVERS/STM32F767ZITX_FLASH.ld" --specs=nosys.specs -Wl,-Map="stm32f7xx_drivers.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv5-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

@@ -56,7 +56,7 @@
  * Base addresses of APBx and AHBx Peripheral
  */
 
-#define PERIPH_BASEADDR				0X4000 0000U
+#define PERIPH_BASEADDR				0X40000000U
 #define APB1PERIPH_BASEADDR			PERIPH_BASEADDR
 #define APB2PERIPH_BASEADDR			0x40010000U
 #define AHB1PERIPH_BASEADDR			0x40020000U
@@ -210,6 +210,23 @@ typedef struct{
 
 }SYSCFG_RegDef_t;
 
+
+// Peripheral register definition structure for SPI
+typedef struct{
+
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t SR;
+	__vo uint32_t DR;
+	__vo uint32_t CRCPR;
+	__vo uint32_t RXCRCR;
+	__vo uint32_t TXCRCR;
+	__vo uint32_t I2SCFGR;
+	__vo uint32_t I2SPR;
+
+
+}SPI_RegDef_t;
+
 // Peripheral definitions (Peripheral base addresses type casted to xxx_RegDef_t)
 
 #define GPIOA		((GPIO_RegDef_t*)GPIOA_BASEADDR)
@@ -229,6 +246,13 @@ typedef struct{
 #define EXTI		((EXTI_RegDef_t*)EXTI_BASEADDR)
 
 #define SYSCFG		((SYSCFG_RegDef_t*)SYSCFG_BASEADDR)
+
+#define SPI1		((SPI_RegDef_t*)SPI1_BASEADDR)
+#define SPI2		((SPI_RegDef_t*)SPI2_BASEADDR)
+#define SPI3		((SPI_RegDef_t*)SPI3_BASEADDR)
+#define SPI4		((SPI_RegDef_t*)SPI4_BASEADDR)
+#define SPI5		((SPI_RegDef_t*)SPI5_BASEADDR)
+#define SPI6		((SPI_RegDef_t*)SPI6_BASEADDR)
 
 /****************************Peripheral clock enabling macros***************************/
 
@@ -398,6 +422,9 @@ typedef struct{
 #define NVIC_PRIORITY_14			14
 #define NVIC_PRIORITY_15			15
 
-#include <stm32f767xx_gpio_driver.h>
+
+
+#include "stm32f767xx_gpio_driver.h"
+#include "stm32f767xx_spi_driver.h"
 
 #endif /* INC_STM32F767XX_H_ */
