@@ -361,15 +361,6 @@ typedef struct{
 #define SYSCFG_PCLK_EN()	(RCC -> APB2ENR |= (1 << 14))
 
 
-// Generic Macros
-
-#define ENABLE 			1
-#define DISABLE 		0
-#define SET 			ENABLE
-#define RESET 			DISABLE
-#define GPIO_PIN_SET	SET
-#define GPIO_PIN_RESET	RESET
-
 // Macros to reset GPIOx peripheral
 #define GPIOA_REG_RESET()			do{ (RCC->AHB1RSTR |= (1 << 0)); (RCC->AHB1RSTR &= ~(1 << 0)); } while(0)
 #define GPIOB_REG_RESET()			do{ (RCC->AHB1RSTR |= (1 << 1)); (RCC->AHB1RSTR &= ~(1 << 1)); } while(0)
@@ -421,6 +412,63 @@ typedef struct{
 #define NVIC_PRIORITY_13			13
 #define NVIC_PRIORITY_14			14
 #define NVIC_PRIORITY_15			15
+
+
+// Generic Macros
+
+#define ENABLE 			1
+#define DISABLE 		0
+#define SET 			ENABLE
+#define RESET 			DISABLE
+#define GPIO_PIN_SET	SET
+#define GPIO_PIN_RESET	RESET
+
+
+/***********************************************************************
+ * 			Bit position definitions of SPI Peripherals
+ **********************************************************************/
+// CR1 Register
+#define SPI_CR1_CPHA				0
+#define SPI_CR1_CPOL				1
+#define SPI_CR1_MSTR				2
+#define SPI_CR1_BR  				3
+#define SPI_CR1_SPE					6
+#define SPI_CR1_LSBFIRST			7
+#define SPI_CR1_SSI 				8
+#define SPI_CR1_SSM 				9
+#define SPI_CR1_RXONLY				10
+#define SPI_CR1_CRCL				11
+#define SPI_CR1_CRCNEXT				12
+#define SPI_CR1_CRCEN				13
+#define SPI_CR1_BIDIOE				14
+#define SPI_CR1_BIDIMODE			15
+
+// CR2 Register
+#define SPI_CR1_RXDMAEN				0
+#define SPI_CR1_TXDMAEN				1
+#define SPI_CR1_SSOE				2
+#define SPI_CR1_NASSP				3
+#define SPI_CR1_FRF 				4
+#define SPI_CR1_ERRIE				5
+#define SPI_CR1_RXNEIE				6
+#define SPI_CR1_TXEIE   			7
+#define SPI_CR1_DS  				8
+#define SPI_CR1_FRXTH				12
+#define SPI_CR1_LDMA_RX				13
+#define SPI_CR1_LDMA_TX				14
+
+// Status Register
+#define SPI_SR_RXNE 				0
+#define SPI_SR_TXE  				1
+#define SPI_SR_CHSIDE				2
+#define SPI_SR_UDR      			3
+#define SPI_SR_CRCERR				4
+#define SPI_SR_MODF					5
+#define SPI_SR_OVR					6
+#define SPI_SR_BSY  				7
+#define SPI_SR_FRE					8
+#define SPI_SR_FRLVL				9
+#define SPI_SR_FTLVL				11
 
 
 
