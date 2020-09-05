@@ -86,11 +86,11 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 		//bidi mode cleared
 		tempreg &= ~(1 << SPI_CR1_BIDIMODE);
 
-	}else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_DD){
+	}else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_HD){
 		// bidi mode set
 		tempreg |= (1 << SPI_CR1_BIDIMODE);
 
-	}else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_RXONLY){
+	}else if(pSPIHandle->SPIConfig.SPI_BusConfig == SPI_BUS_CONFIG_SIMPLEX_RXONLY){
 		// bidi mode cleared
 		tempreg &= ~(1 << SPI_CR1_BIDIMODE);
 		// RXOnly bit set
@@ -132,21 +132,58 @@ void SPI_DeInit(SPI_RegDef_t *pSPIx){
 }
 
 
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName){
+
+	if(pSPIx->SR & FlagName)
+	{
+		return FLAG_SET;
+	}
+
+	return FLAG_RESET;
+
+}
+
+
 /*****************************************************************
- * @function				- SPI_PeriClockControl
+ * @function				- SPI_SendData
  *
- * @description				- The function enables or disables peripheral clock for the SPI peripheral
+ * @description				- The function sends the data
  *
  * @params[in]				- Base address of the SPIperipheral
- * @params[in]				- ENABLE or DISABLE Macros
- *
+ * @params[in]				- TX Buffer pointer
+ * @params[in]				- Length
  * @return					- None
  *
- * @note					- None
+ * @note					- This is a blocking call
  *
  */
 void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 
+	while(Len > 0){
+
+		// 1. Wait till TXE is set
+		while(SPI_GetFlagStatus(pSPIx, SPI_TXE_FLAG) == FLAG_RESET);
+
+		//2. Check DFF
+		if(pSPIx->CR1 & (1 << SPI_CR1_CRCL)){
+
+			// 16bit DFF
+			// 1. Load the data into DR
+			pSPIx->DR = *((uint16_t*)pTxBuffer);
+			Len--;
+			Len--;
+			(uint16_t*)pTxBuffer++;
+
+		}else{
+			// 8bit DFF
+			pSPIx->DR = *pTxBuffer;
+			Len--;
+			Len--;
+			pTxBuffer++;
+
+		}
+
+	}
 }
 
 
