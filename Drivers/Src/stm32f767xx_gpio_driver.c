@@ -97,6 +97,9 @@ void GPIO_Init(GPIO_Handle_t *pGPIOHandle){
 
 	uint32_t temp = 0;
 
+	// Enable the GPIO Clock
+	GPIO_PeriClockControl(pGPIOHandle->pGPIOx, ENABLE);
+
 	// 1. Configure the Mode of the GPIO pin
 	if(pGPIOHandle -> GPIO_PinConfig.GPIO_PinMode <= GPIO_MODE_ANALOG){
 		// Non-Interrupt Mode

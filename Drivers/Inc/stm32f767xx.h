@@ -446,18 +446,18 @@ typedef struct{
 #define SPI_CR1_BIDIMODE			15
 
 // CR2 Register
-#define SPI_CR1_RXDMAEN				0
-#define SPI_CR1_TXDMAEN				1
-#define SPI_CR1_SSOE				2
-#define SPI_CR1_NASSP				3
-#define SPI_CR1_FRF 				4
-#define SPI_CR1_ERRIE				5
-#define SPI_CR1_RXNEIE				6
-#define SPI_CR1_TXEIE   			7
-#define SPI_CR1_DS  				8
-#define SPI_CR1_FRXTH				12
-#define SPI_CR1_LDMA_RX				13
-#define SPI_CR1_LDMA_TX				14
+#define SPI_CR2_RXDMAEN				0
+#define SPI_CR2_TXDMAEN				1
+#define SPI_CR2_SSOE				2
+#define SPI_CR2_NASSP				3
+#define SPI_CR2_FRF 				4
+#define SPI_CR2_ERRIE				5
+#define SPI_CR2_RXNEIE				6
+#define SPI_CR2_TXEIE   			7
+#define SPI_CR2_DS  				8
+#define SPI_CR2_FRXTH				12
+#define SPI_CR2_LDMA_RX				13
+#define SPI_CR2_LDMA_TX				14
 
 // Status Register
 #define SPI_SR_RXNE 				0

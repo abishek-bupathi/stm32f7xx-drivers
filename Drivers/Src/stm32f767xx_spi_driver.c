@@ -74,6 +74,9 @@ void SPI_PeriClockControl(SPI_RegDef_t *pSPIx, uint8_t EnorDi){
  */
 void SPI_Init(SPI_Handle_t *pSPIHandle){
 
+	// Enable SPI Peripheral clock
+	SPI_PeriClockControl(pSPIHandle->pSPIx, ENABLE);
+
 	// Configure CR1 Register
 
 	uint32_t tempreg = 0;
@@ -255,5 +258,61 @@ void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint8_t IRQPriority){
  *
  */
 void SPI_IRQHandle(SPI_Handle_t *pHandle){
+
+}
+
+
+/*****************************************************************
+ * @function				- SPI_PeripheralControl
+ *
+ * @description				- The function enables or disables the SPI peripheral
+ *
+ * @params[in]				- Base address of the SPIperipheral
+ * @params[in]				- ENABLE or DISABLE Macros
+ *
+ * @return					- None
+ *
+ * @note					- None
+ *
+ */
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
+
+	if(EnOrDi == ENABLE){
+
+		pSPIx->CR1 |= (1 << SPI_CR1_SPE);
+
+	}else{
+
+		pSPIx->CR1 &= ~(1 << SPI_CR1_SPE);
+
+	}
+
+}
+
+
+/*****************************************************************
+ * @function				- SPI_SSIConfig
+ *
+ * @description				- The function enables or disables the SPI SSI Register
+ *
+ * @params[in]				- Base address of the SPIperipheral
+ * @params[in]				- ENABLE or DISABLE Macros
+ *
+ * @return					- None
+ *
+ * @note					- None
+ *
+ */
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
+
+	if(EnOrDi == ENABLE){
+
+		pSPIx->CR1 |= (1 << SPI_CR1_SSI);
+
+	}else{
+
+		pSPIx->CR1 &= ~(1 << SPI_CR1_SSI);
+
+	}
 
 }
