@@ -101,10 +101,15 @@ int main(void){
 	// Enable SPI2 Peripheral
 	SPI_PeripheralControl(SPI2, ENABLE);
 
+	// send data
 	SPI_SendData(SPI2, (uint8_t*)user_data, strlen(user_data));
+
+	// Conforming SPI is not busy
+	while(SPI_GetFlagStatus(SPI2, SPI_BUSY_FLAG));
 
 	// Closing the communication
 	SPI_PeripheralControl(SPI2, DISABLE);
+
 	while(1);
 
 	return 0;

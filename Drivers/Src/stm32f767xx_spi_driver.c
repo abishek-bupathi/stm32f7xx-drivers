@@ -109,8 +109,10 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 	// 5. Configure CPOL
 	tempreg |= pSPIHandle->SPIConfig.SPI_CPOL << SPI_CR1_CPOL;
 
-	// 4. Configure CPHA
+	// 6. Configure CPHA
 	tempreg |= pSPIHandle->SPIConfig.SPI_CPHA << SPI_CR1_CPHA;
+
+	tempreg |= pSPIHandle->SPIConfig.SPI_SSM << SPI_CR1_SSM;
 
 	pSPIHandle->pSPIx->CR1 = tempreg;
 
@@ -180,7 +182,6 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 		}else{
 			// 8bit DFF
 			pSPIx->DR = *pTxBuffer;
-			Len--;
 			Len--;
 			pTxBuffer++;
 
@@ -312,6 +313,34 @@ void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
 	}else{
 
 		pSPIx->CR1 &= ~(1 << SPI_CR1_SSI);
+
+	}
+
+}
+
+
+/*****************************************************************
+ * @function				- SPI_SSOEConfig
+ *
+ * @description				- The function enables or disables the SPI SSOE Register
+ *
+ * @params[in]				- Base address of the SPIperipheral
+ * @params[in]				- ENABLE or DISABLE Macros
+ *
+ * @return					- None
+ *
+ * @note					- None
+ *
+ */
+void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi){
+
+	if(EnOrDi == ENABLE){
+
+		pSPIx->CR2 |= (1 << SPI_CR2_SSOE);
+
+	}else{
+
+		pSPIx->CR2 &= ~(1 << SPI_CR2_SSOE);
 
 	}
 
