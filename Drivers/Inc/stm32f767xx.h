@@ -5,10 +5,12 @@
  *      Author: abishek_bupathi
  */
 
-#include <stdint.h>
 
 #ifndef INC_STM32F767XX_H_
 #define INC_STM32F767XX_H_
+
+#include <stdint.h>
+#include <stddef.h>
 
 #define __vo volatile
 
@@ -282,7 +284,7 @@ typedef struct{
 
 // Clock enable Macros for SPI peripherals
 
-#define SPI1_PCLK_EN()		(RCC -> APB2ENR |= (1 << 21))
+#define SPI1_PCLK_EN()		(RCC -> APB2ENR |= (1 << 12))
 #define SPI2_PCLK_EN()		(RCC -> APB1ENR |= (1 << 14))
 #define SPI3_PCLK_EN()		(RCC -> APB1ENR |= (1 << 15))
 #define SPI4_PCLK_EN()		(RCC -> APB2ENR |= (1 << 13))
@@ -336,7 +338,7 @@ typedef struct{
 
 // Clock disable Macros for SPI peripherals
 
-#define SPI1_PCLK_DI()		(RCC -> APB2ENR &= ~(1 << 21))
+#define SPI1_PCLK_DI()		(RCC -> APB2ENR &= ~(1 << 12))
 #define SPI2_PCLK_DI()		(RCC -> APB1ENR &= ~(1 << 14))
 #define SPI3_PCLK_DI()		(RCC -> APB1ENR &= ~(1 << 15))
 #define SPI4_PCLK_DI()		(RCC -> APB2ENR &= ~(1 << 13))
@@ -439,7 +441,7 @@ typedef struct{
 #define SPI_CR1_SSI 				8
 #define SPI_CR1_SSM 				9
 #define SPI_CR1_RXONLY				10
-#define SPI_CR1_CRCL				11
+#define SPI_CR1_CRCL 				11
 #define SPI_CR1_CRCNEXT				12
 #define SPI_CR1_CRCEN				13
 #define SPI_CR1_BIDIOE				14
@@ -449,7 +451,7 @@ typedef struct{
 #define SPI_CR2_RXDMAEN				0
 #define SPI_CR2_TXDMAEN				1
 #define SPI_CR2_SSOE				2
-#define SPI_CR2_NASSP				3
+#define SPI_CR2_NSSP				3
 #define SPI_CR2_FRF 				4
 #define SPI_CR2_ERRIE				5
 #define SPI_CR2_RXNEIE				6

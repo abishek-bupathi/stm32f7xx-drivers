@@ -17,7 +17,7 @@ typedef struct{
 	uint8_t SPI_DeviceMode;
 	uint8_t SPI_BusConfig;
 	uint8_t SPI_SclkSpeed;
-	uint8_t SPI_DFF;
+	uint8_t SPI_CRCL;
 	uint8_t SPI_CPOL;
 	uint8_t SPI_CPHA;
 	uint8_t SPI_SSM;
@@ -30,6 +30,12 @@ typedef struct{
 
 	SPI_RegDef_t *pSPIx;
 	SPI_Config_t SPIConfig;
+	uint8_t 		*pTxBuffer; /* !< To store the app. Tx buffer address > */
+	uint8_t 		*pRxBuffer;	/* !< To store the app. Rx buffer address > */
+	uint32_t 		TxLen;		/* !< To store Tx len > */
+	uint32_t 		RxLen;		/* !< To store Tx len > */
+	uint8_t 		TxState;	/* !< To store Tx state > */
+	uint8_t 		RxState;	/* !< To store Rx state > */
 
 }SPI_Handle_t;
 
@@ -100,5 +106,6 @@ void SPI_IRQHandle(SPI_Handle_t *pHandle);
 void SPI_PeripheralControl(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 void SPI_SSIConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
 void SPI_SSOEConfig(SPI_RegDef_t *pSPIx, uint8_t EnOrDi);
+uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName);
 
 #endif /* INC_STM32F767XX_SPI_DRIVER_H_ */

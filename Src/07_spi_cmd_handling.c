@@ -25,6 +25,27 @@
 #include "string.h"
 #include "stm32f767xx.h"
 
+// Command codes
+#define COMMAND_LED_CTRL		0x50
+#define COMMAND_SENSOR_READ		0x51
+#define COMMAND_LED_READ		0x52
+#define COMMAND_PRINT   		0x53
+#define COMMAND_ID_READ 		0x54
+
+#define LED_ON					0
+#define LED_OFF					1
+
+// Arduino Analog Pins
+#define ANALOG_PIN0				0
+#define ANALOG_PIN1				1
+#define ANALOG_PIN2				2
+#define ANALOG_PIN3				3
+#define ANALOG_PIN4				4
+#define ANALOG_PIN5				5
+
+// Ardiuno LED pin
+#define LED_PIN					9
+
 
 void delay(void){
 	for(uint32_t i = 0; i < 500000; i++ );
@@ -64,8 +85,8 @@ void SPI2_GPIOInits(void){
 		GPIO_Init(&SPIPins);
 
 		//MISO
-		//SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
-		//GPIO_Init(&SPIPins);
+		SPIPins.GPIO_PinConfig.GPIO_PinNumber = GPIO_PIN_NO_14;
+		GPIO_Init(&SPIPins);
 
 
 		//NSS
@@ -107,10 +128,24 @@ void GPIO_ButtonInit(void){
 }
 
 
+uint8_t SPI_VerifyResponse(uint8_t ackbyte){
+
+	if(ackbyte == 0xF5){
+		//ack
+		return 1;
+
+	}else{
+		return 0;
+	}
+
+}
+
+
 int main(void){
 
 
-	char user_data[] = "this is a test";
+	uint8_t dummy_write = 0xff;
+	uint8_t dummy_read;
 
 	GPIO_ButtonInit();
 
@@ -128,12 +163,32 @@ int main(void){
 		// Enable SPI2 Peripheral
 		SPI_PeripheralControl(SPI2, ENABLE);
 
-		// Send Length information
-		uint8_t dataLen = strlen(user_data);
-		SPI_SendData(SPI2, &dataLen, 1);
+		// 1. CMD_LED_CTRL		<pin no(1)>		<value(1)>
 
-		// Send data
-		SPI_SendData(SPI2, (uint8_t*)user_data, strlen(user_data));
+		uint8_t cmdcode = COMMAND_LED_CTRL;
+		uint8_t ackbyte;
+		uint8_t args[2];
+
+		// send command
+		SPI_SendData(SPI2, &cmdcode, 1);
+
+		// dummy read to clear off RXNE
+		SPI_RecieveData(SPI2, &dummy_read, 1);
+
+		// send dummy data to fetch the response from the slave
+		SPI_SendData(SPI2, &dummy_write, 1);
+
+		SPI_RecieveData(SPI2, &ackbyter,1);
+
+		if(SPI_VerifyResponse(ackbyte)){
+
+			// Send arguments
+			arg[0]  = LED_PIN;
+			args[1] = LED_ON
+
+			SPI_SendData(SPI2, &args, 1);
+		}
+
 
 		// Conforming SPI is not busy
 		while( SPI_GetFlagStatus(SPI2,SPI_BUSY_FLAG) );

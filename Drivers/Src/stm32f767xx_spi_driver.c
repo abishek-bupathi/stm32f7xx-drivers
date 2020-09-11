@@ -104,7 +104,7 @@ void SPI_Init(SPI_Handle_t *pSPIHandle){
 	tempreg |= pSPIHandle->SPIConfig.SPI_SclkSpeed << SPI_CR1_BR;
 
 	// 4. Configure DFF
-	tempreg |= pSPIHandle->SPIConfig.SPI_DFF << SPI_CR1_CRCL;
+	tempreg |= pSPIHandle->SPIConfig.SPI_CRCL << SPI_CR1_CRCL;
 
 	// 5. Configure CPOL
 	tempreg |= pSPIHandle->SPIConfig.SPI_CPOL << SPI_CR1_CPOL;
@@ -155,7 +155,7 @@ uint8_t SPI_GetFlagStatus(SPI_RegDef_t *pSPIx, uint32_t FlagName){
  * @description				- The function sends the data
  *
  * @params[in]				- Base address of the SPIperipheral
- * @params[in]				- TX Buffer pointer
+ * @params[in]				- TX Buffer pointer (Data)
  * @params[in]				- Length
  * @return					- None
  *
@@ -192,12 +192,13 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
 
 
 /*****************************************************************
- * @function				- SPI_PeriClockControl
+ * @function				- SPI_RecieveData
  *
- * @description				- The function enables or disables peripheral clock for the SPI peripheral
+ * @description				- The function recieves data
  *
  * @params[in]				- Base address of the SPIperipheral
- * @params[in]				- ENABLE or DISABLE Macros
+ * @params[in]				- RxBuffer
+ * @params[in]				- Length
  *
  * @return					- None
  *
@@ -206,6 +207,29 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len){
  */
 void SPI_RecieveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len){
 
+	while(Len > 0){
+
+		// 1. Wait till RXE is set
+		while(SPI_GetFlagStatus(pSPIx, SPI_RXNE_FLAG) == FLAG_RESET);
+
+		//2. Check DFF
+		if(pSPIx->CR1 & (1 << SPI_CR1_CRCL)){
+
+			// 16bit DFF
+			// 1. Load the data from DR to RXBuffer
+			*((uint16_t*)pRxBuffer) = pSPIx->DR;
+			Len--;
+			Len--;
+			(uint16_t*)pRxBuffer++;
+
+		}else{
+			// 8bit DFF
+			*((uint16_t*)pRxBuffer) = pSPIx->DR;
+			Len--;
+			RTxBuffer++;
+
+		}
+	}
 }
 
 
