@@ -25,12 +25,14 @@
 #include "string.h"
 #include "stm32f767xx.h"
 
+extern void initialise_monitor_handles();
+
 // Command codes
-#define COMMAND_LED_CTRL		0x50
-#define COMMAND_SENSOR_READ		0x51
-#define COMMAND_LED_READ		0x52
-#define COMMAND_PRINT   		0x53
-#define COMMAND_ID_READ 		0x54
+#define CMD_LED_CTRL		0x50
+#define CMD_SENSOR_READ		0x51
+#define CMD_LED_READ		0x52
+#define CMD_PRINT   		0x53
+#define CMD_ID_READ 		0x54
 
 #define LED_ON					0
 #define LED_OFF					1
@@ -147,11 +149,16 @@ int main(void){
 	uint8_t dummy_write = 0xff;
 	uint8_t dummy_read;
 
+	initialise_monitor_handles();
+
+	printf("Application started... \n");
+
 	GPIO_ButtonInit();
+	printf("GPIO Initalised...\n");
 
 	SPI2_GPIOInits();
-
 	SPI2_Inits();
+	printf("SPI Initialised...\n");
 
 	SPI_SSOEConfig(SPI2, ENABLE);
 
@@ -165,7 +172,7 @@ int main(void){
 
 		// 1. CMD_LED_CTRL		<pin no(1)>		<value(1)>
 
-		uint8_t cmdcode = COMMAND_LED_CTRL;
+		uint8_t cmdcode = CMD_LED_CTRL;
 		uint8_t ackbyte;
 		uint8_t args[2];
 
@@ -178,16 +185,61 @@ int main(void){
 		// send dummy data to fetch the response from the slave
 		SPI_SendData(SPI2, &dummy_write, 1);
 
-		SPI_RecieveData(SPI2, &ackbyter,1);
+		SPI_RecieveData(SPI2, &ackbyte,1);
 
 		if(SPI_VerifyResponse(ackbyte)){
 
 			// Send arguments
-			arg[0]  = LED_PIN;
-			args[1] = LED_ON
+			args[0]  = LED_PIN;
+			args[1] = LED_ON;
 
 			SPI_SendData(SPI2, &args, 1);
+			printf("CMD_LED_CTRL Executed!\n");
 		}
+
+		// 2. CMD_SENSOR_READ
+
+		// wait till button is pressed
+		while(GPIO_ReadFromInputPin(GPIOC, GPIO_PIN_NO_13));
+		delay();
+
+		cmdcode = CMD_SENSOR_READ;
+
+		// send command
+		SPI_SendData(SPI2, &cmdcode, 1);
+
+		// dummy read to clear off RXNE
+		SPI_RecieveData(SPI2, &dummy_read, 1);
+
+		// send dummy data to fetch the response from the slave
+		SPI_SendData(SPI2, &dummy_write, 1);
+
+		SPI_RecieveData(SPI2, &ackbyte,1);
+
+		if(SPI_VerifyResponse(ackbyte)){
+
+			// Send arguments
+			args[0]  = ANALOG_PIN0;
+
+			SPI_SendData(SPI2, &args, 1);
+
+			// dummy read to clear off RXNE
+			SPI_RecieveData(SPI2, &dummy_read, 1);
+
+			delay();
+
+			// send dummy data to fetch the response from the slave
+			SPI_SendData(SPI2, &dummy_write, 1);
+
+			uint8_t analog_read;
+
+			SPI_RecieveData(SPI2, analog_read, 1);
+
+			printf("Analog Read value: %d\n", analog_read);
+
+		}
+
+
 
 
 		// Conforming SPI is not busy
@@ -196,6 +248,8 @@ int main(void){
 
 		// Closing the communication
 		SPI_PeripheralControl(SPI2, DISABLE);
+
+		printf("SPI Connection Closed\n");
 
 	}
 

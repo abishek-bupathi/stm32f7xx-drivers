@@ -226,7 +226,7 @@ void SPI_RecieveData(SPI_RegDef_t *pSPIx, uint8_t *pRxBuffer, uint32_t Len){
 			// 8bit DFF
 			*((uint16_t*)pRxBuffer) = pSPIx->DR;
 			Len--;
-			RTxBuffer++;
+			pRxBuffer++;
 
 		}
 	}
