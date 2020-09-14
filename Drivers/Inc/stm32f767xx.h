@@ -398,6 +398,14 @@ typedef struct{
 #define IRQ_NO_EXTI5_9				23
 #define IRQ_NO_EXTI15_10			40
 
+#define IRQ_NO_SPI1					35
+#define IRQ_NO_SPI2					36
+#define IRQ_NO_SPI3					51
+#define IRQ_NO_SPI4					84
+#define IRQ_NO_SPI5					85
+#define IRQ_NO_SPI1					86
+
+
 // IRQ Priority Macros
 #define NVIC_PRIORITY_1				1
 #define NVIC_PRIORITY_2				2
