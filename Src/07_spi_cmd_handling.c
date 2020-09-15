@@ -151,10 +151,10 @@ int main(void){
 
 	initialise_monitor_handles();
 
-	printf("Application started... \n");
+	printf("Application started...\n");
 
 	GPIO_ButtonInit();
-	printf("GPIO Initalised...\n");
+	printf("GPIO Initialised...\n");
 
 	SPI2_GPIOInits();
 	SPI2_Inits();
@@ -193,7 +193,7 @@ int main(void){
 			args[0]  = LED_PIN;
 			args[1] = LED_ON;
 
-			SPI_SendData(SPI2, &args, 1);
+			SPI_SendData(SPI2, args, 1);
 			printf("CMD_LED_CTRL Executed!\n");
 		}
 
@@ -221,7 +221,7 @@ int main(void){
 			// Send arguments
 			args[0]  = ANALOG_PIN0;
 
-			SPI_SendData(SPI2, &args, 1);
+			SPI_SendData(SPI2, args, 1);
 
 			// dummy read to clear off RXNE
 			SPI_RecieveData(SPI2, &dummy_read, 1);
@@ -231,9 +231,9 @@ int main(void){
 			// send dummy data to fetch the response from the slave
 			SPI_SendData(SPI2, &dummy_write, 1);
 
-			uint8_t analog_read;
+			uint8_t analog_read = 0;
 
-			SPI_RecieveData(SPI2, analog_read, 1);
+			SPI_RecieveData(SPI2, &analog_read, 1);
 
 			printf("Analog Read value: %d\n", analog_read);
 
