@@ -229,6 +229,27 @@ typedef struct{
 
 }SPI_RegDef_t;
 
+
+// Peripheral register definition structure for I2C
+typedef struct{
+
+	__vo uint32_t CR1;
+	__vo uint32_t CR2;
+	__vo uint32_t OAR1;
+	__vo uint32_t OAR2;
+	__vo uint32_t TIMINGR;
+	__vo uint32_t TIMEOUTR;
+	__vo uint32_t ISR;
+	__vo uint32_t ICR;
+	__vo uint32_t PECR;
+	__vo uint32_t RXDR;
+	__vo uint32_t TXDR;
+
+
+
+}I2C_RegDef_t;
+
+
 // Peripheral definitions (Peripheral base addresses type casted to xxx_RegDef_t)
 
 #define GPIOA		((GPIO_RegDef_t*)GPIOA_BASEADDR)
@@ -255,6 +276,11 @@ typedef struct{
 #define SPI4		((SPI_RegDef_t*)SPI4_BASEADDR)
 #define SPI5		((SPI_RegDef_t*)SPI5_BASEADDR)
 #define SPI6		((SPI_RegDef_t*)SPI6_BASEADDR)
+
+#define I2C1		((I2C_RegDef_t*)I2C1_BASEADDR)
+#define I2C2		((I2C_RegDef_t*)I2C2_BASEADDR)
+#define I2C3		((I2C_RegDef_t*)I2C3_BASEADDR)
+#define I2C4		((I2C_RegDef_t*)I2C4_BASEADDR)
 
 /****************************Peripheral clock enabling macros***************************/
 
@@ -486,5 +512,6 @@ typedef struct{
 
 #include "stm32f767xx_gpio_driver.h"
 #include "stm32f767xx_spi_driver.h"
+#include "stm32f767xx_i2c_driver.h"
 
 #endif /* INC_STM32F767XX_H_ */
