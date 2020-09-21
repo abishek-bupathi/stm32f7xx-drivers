@@ -1,4 +1,6 @@
 "Drivers/Src/stm32f767xx_gpio_driver.o"
+"Drivers/Src/stm32f767xx_i2c_driver.o"
 "Drivers/Src/stm32f767xx_spi_driver.o"
+"Drivers/Src/stm32f767xx_usart_driver.o"
 "Src/07_spi_cmd_handling.o"
 "Startup/startup_stm32f767zitx.o"
